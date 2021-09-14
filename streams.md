@@ -11,8 +11,9 @@ import (
     "fmt"
 
     "github.com/caravan/essentials"
+	"github.com/caravan/essentials/event"
+	"github.com/caravan/essentials/sender"
     "github.com/caravan/streaming/stream/node"
-    "github.com/caravan/essentials/topic"
     "github.com/caravan/essentials/topic/config"
 )
 
@@ -25,8 +26,8 @@ func main() {
         node.TopicSource(in),
         // Filter events coming from 'in' to only include
         // even numbers
-        node.Filter(func(event topic.Event) bool {
-            return event.(int) % 2 == 0
+        node.Filter(func(e event.Event) bool {
+            return e.(int) % 2 == 0
         }),
         // Stream the remaining events to the 'out' topic
         node.TopicSink(out),
@@ -35,18 +36,18 @@ func main() {
 
     go func() {
         c := out.NewConsumer()
-        for i := range c.Channel() {
+        for i := range c.Receive() {
             fmt.Println(i)
         }
-        _ = c.Close()
+        c.Close()
     }()
 
     go func() {
         p := in.NewProducer()
         for i := 0; i < 100; i++ {
-            _ = p.Send(i)
+			p.Send() <- i
         }
-        _ = p.Close()
+        p.Close()
     }()
 
     <- make(chan bool) // hit ctrl-c

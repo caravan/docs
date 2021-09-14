@@ -43,7 +43,7 @@ func main() {
     debug.Enable()
     go func() {
         debug.WithConsumer(func (c topic.Consumer) {
-            for e := range c.Channel() {
+            for e := range c.Receive() {
                 fmt.Println(e)
             }
         })

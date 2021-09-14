@@ -1,6 +1,6 @@
 # Channel APIs
 
-Channel APIs take the work of sending to a Producer, or receiving from a Consumer, and simplify the approach down to using [Go Channels](https://tour.golang.org/concurrency/2). In order to use these APIs, you'd call the `Channel` method on a Consumer or Producer. For example:
+Channel APIs take the work of sending to a Producer, or receiving from a Consumer, and simplify the approach down to using [Go Channels](https://tour.golang.org/concurrency/2). In order to use these APIs, you'd call the `Receive` method on a Consumer, or the `Send` method on a Producer. For example:
 
 ```go
 package main
@@ -19,18 +19,18 @@ func main() {
     go func() {
         p := top.NewProducer()
         for i := 0; i < 10; i++ {
-            p.Channel() <- fmt.Sprintf("Event %d", i)
+            p.Send() <- fmt.Sprintf("Event %d", i)
         }
-        _ = p.Close()
+        p.Close()
     }()
 
     // Receive some stuff from the topic via its channel
     go func() {
         c := top.NewConsumer()
         for i := 0; i < 10; i++ {
-            fmt.Println(<-c.Channel())
+            fmt.Println(<-c.Receive())
         }
-        _ = c.Close()
+        c.Close()
     }()
 
     <- make(chan bool) // hit ctrl-c
