@@ -11,8 +11,7 @@ import (
     "fmt"
 
     "github.com/caravan/essentials"
-	"github.com/caravan/essentials/event"
-	"github.com/caravan/essentials/sender"
+	"github.com/caravan/essentials/message"
     "github.com/caravan/streaming/stream/node"
     "github.com/caravan/essentials/topic/config"
 )
@@ -26,7 +25,7 @@ func main() {
         node.TopicSource(in),
         // Filter events coming from 'in' to only include
         // even numbers
-        node.Filter(func(e event.Event) bool {
+        node.Filter(func(e message.Event) bool {
             return e.(int) % 2 == 0
         }),
         // Stream the remaining events to the 'out' topic

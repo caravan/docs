@@ -16,8 +16,8 @@ Events are the messages that are passed around by Caravan. At the moment an Even
 
 ### Producers
 
-[Producers](./producers.md) allow you to append Events to the Log. The interface is rather simple. You can either use the `sender.Send` function or retrieve the underlying channel using the Producer's `Send` method and push Events directly to it.
+[Producers](./producers.md) allow you to append Events to the Log. The interface is rather simple. You can either use the `message.Send` function or retrieve the underlying channel using the Producer's `Send` method and push Events directly to it.
 
 ### Consumers
 
-[Consumers](./consumers.md) allow you to receive Events from the Log. You can do this using function like `receiver.Poll`, which allows for a timeout, using `receiver.Receive`, which will block indefinitely, or retrieving the underlying channel using the `Receive` method and pulling Events directly from it.
+[Consumers](./consumers.md) allow you to receive Events from the Log. You can do this using function like `message.Poll`, which allows for a timeout, using `message.Receive`, which will block indefinitely, or retrieving the underlying channel using the `Receive` method and pulling Events directly from it.

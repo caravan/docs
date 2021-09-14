@@ -9,13 +9,13 @@ import (
     "fmt"
 
     "github.com/caravan/essentials"
-	"github.com/caravan/essentials/sender"
+	"github.com/caravan/essentials/message"
 )
 
 func main() {
     top := essentials.NewTopic()
     p := top.NewProducer()
-    if ok := sender.Send(p, "someEvent"); ok {
+    if ok := message.Send(p, "someEvent"); ok {
         fmt.Println("Send was successful")
     } else {
         fmt.Println("Producer was closed!")

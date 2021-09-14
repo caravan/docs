@@ -16,14 +16,14 @@ import (
     "time"
 
     "github.com/caravan/essentials"
-	"github.com/caravan/essentials/receiver"
+	"github.com/caravan/essentials/message"
 )
 
 func main() {
     top := essentials.NewTopic()
     // ... Code that produces Events
     c := top.NewConsumer()
-    if e, ok := receiver.Poll(c, time.Millisecond * 50); ok {
+    if e, ok := message.Poll(c, time.Millisecond * 50); ok {
         fmt.Println("Received: ", e)
     } else {
         fmt.Println("Nothing Received")
@@ -42,14 +42,14 @@ import (
     "fmt"
 
     "github.com/caravan/essentials"
-    "github.com/caravan/essentials/receiver"
+    "github.com/caravan/essentials/message"
 )
 
 func main() {
     top := essentials.NewTopic()
     // ... Code that produces Events
     c := top.NewConsumer()
-    if e, ok := receiver.Receive(c); ok {
+    if e, ok := message.Receive(c); ok {
         fmt.Println("Received: ", e)
     } else {
         fmt.Println("Consumer was closed!")
