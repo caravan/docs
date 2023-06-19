@@ -42,7 +42,7 @@ import (
 func main() {
     debug.Enable()
     go func() {
-        debug.WithConsumer(func (c topic.Consumer) {
+        debug.WithConsumer(func (c topic.Consumer[error]) {
             for e := range c.Receive() {
                 fmt.Println(e)
             }

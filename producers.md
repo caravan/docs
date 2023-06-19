@@ -1,6 +1,6 @@
 # Producers
 
-Producers allow you to append Events to the Log. The interface is rather simple. You can either use the `Send` method or retrieve the underlying `Channel` and push Events directly to it.
+Producers allow you to append messages to the Log. The interface is rather simple. You can either use the `Send` method or retrieve the underlying `Channel` and push messages directly to it.
 
 ```go
 package main
@@ -9,15 +9,15 @@ import (
     "fmt"
 
     "github.com/caravan/essentials"
-	"github.com/caravan/essentials/message"
 )
 
 func main() {
-    top := essentials.NewTopic()
+    top := essentials.NewTopic[string]()
     p := top.NewProducer()
-    if ok := message.Send(p, "someEvent"); ok {
+    select {
+    case p.Send() <- "someMessage":
         fmt.Println("Send was successful")
-    } else {
+    default:
         fmt.Println("Producer was closed!")
     }
 }

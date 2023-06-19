@@ -13,13 +13,13 @@ import (
 )
 
 func main() {
-    top := essentials.NewTopic(config.Permanent)
+    top := essentials.NewTopic[string](config.Permanent)
 
     // Send some stuff to the topic via its channel
     go func() {
         p := top.NewProducer()
         for i := 0; i < 10; i++ {
-            p.Send() <- fmt.Sprintf("Event %d", i)
+            p.Send() <- fmt.Sprintf("Message %d", i)
         }
         p.Close()
     }()
